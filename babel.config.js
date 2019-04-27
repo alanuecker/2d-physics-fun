@@ -1,0 +1,12 @@
+module.export = {
+  parser: 'babel-eslint',
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        useBuiltIns: 'usage',
+      },
+    ],
+  ],
+  plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties'],
+};
