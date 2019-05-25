@@ -8,6 +8,9 @@
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
     "object-curly-newline": "off",
-    "no-extraneous-dependencies": "off"
+    "no-extraneous-dependencies": "off",
+    "no-bitwise": "off",
+    "operator-linebreak": "off",
+    "arrow-parens": "off"
   }
 }
