@@ -23,6 +23,20 @@ module.exports = merge(common, {
         test: /\.(js)$/,
         include: Path.resolve(__dirname, '../src'),
         loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                useBuiltIns: 'usage',
+              },
+            ],
+          ],
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-proposal-class-properties',
+          ],
+        },
       },
       {
         test: /\.css$/i,

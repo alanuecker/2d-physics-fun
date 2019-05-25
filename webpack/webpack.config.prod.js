@@ -27,6 +27,20 @@ module.exports = merge(common, {
         test: /\.(js)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                useBuiltIns: 'usage',
+              },
+            ],
+          ],
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-proposal-class-properties',
+          ],
+        },
       },
       {
         test: /\.css/i,
