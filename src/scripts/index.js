@@ -1,19 +1,20 @@
-import { Engine, Render, Events, MouseConstraint, Mouse, World } from 'matter-js';
+import { Engine, Render, MouseConstraint, Mouse, World } from 'matter-js';
 
 import '../styles/index.css';
 
 import Wall from './components/Wall';
 import Player from './components/Player';
 import BouncyHell from './components/BouncyHell';
+import HitCounter from './components/HitCounter';
 
 // create engine
 const engine = Engine.create();
 const { world } = engine;
 
 const width = window.innerWidth;
-const height = window.innerHeight;
-const halfWidth = window.innerWidth / 2;
-const halfHeight = window.innerHeight / 2;
+const height = window.innerHeight - 64;
+const halfWidth = width / 2;
+const halfHeight = height / 2;
 
 // create renderer
 const render = Render.create({
@@ -50,15 +51,8 @@ World.add(world, [
   Wall(0, halfHeight, 50, width),
 ]);
 
-Events.on(engine, 'collisionStart', ({ pairs }) => {
-  pairs.forEach(({ bodyA, bodyB }) => {
-    if (bodyA.label === 'player' && bodyB.label === 'circle') {
-      console.log('collision', bodyA, bodyB);
-    }
-  });
-});
-
 const bouncyHell = new BouncyHell({ width, world, engine });
+const hitCounter = new HitCounter({ engine });
 
 // add mouse control
 const mouse = Mouse.create(render.canvas);
@@ -80,7 +74,7 @@ render.mouse = mouse;
 // fit the render viewport to the scene
 Render.lookAt(render, {
   min: { x: 0, y: 0 },
-  max: { x: window.innerWidth, y: window.innerHeight },
+  max: { x: width, y: height },
 });
 
 run([player]);
