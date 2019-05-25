@@ -1,11 +1,10 @@
-import { Engine, Render, Body, Composites, Events, MouseConstraint, Mouse, World } from 'matter-js';
+import { Engine, Render, Events, MouseConstraint, Mouse, World } from 'matter-js';
 
 import '../styles/index.css';
 
 import Wall from './components/Wall';
-import Platform from './components/Platform';
-import Rectangle from './components/Rectange';
 import Player from './components/Player';
+import BouncyHell from './components/BouncyHell';
 
 // create engine
 const engine = Engine.create();
@@ -23,7 +22,8 @@ const render = Render.create({
   options: {
     width,
     height,
-    showVelocity: true,
+    wireframes: false,
+    background: '#111',
   },
 });
 
@@ -34,26 +34,15 @@ Engine.run(engine);
 Render.run(render);
 
 const run = (objects, cycle) => {
-  window.requestAnimationFrame(c => run(objects, c));
+  window.requestAnimationFrame((c) => run(objects, c));
   Engine.update(engine, 1000 / 144);
 
-  objects.forEach(obj => obj.render(cycle));
+  objects.forEach((obj) => obj.render(cycle));
 };
-
-// add bodies
-const body = Platform(halfWidth, halfHeight, 200, 60);
-const size = 50;
-let counter = -1;
-
-const stack = Composites.stack(halfWidth - 50, halfHeight - 80 - 6 * size, 1, 6, 0, 0, (x, y) =>
-  Rectangle(x, y, size * 2, size),
-);
 
 const player = new Player({ x: 100, y: 100, world });
 
 World.add(world, [
-  body,
-  stack,
   // walls
   Wall(halfWidth, 0, width, 50),
   Wall(halfWidth, height, width, 50),
@@ -61,19 +50,15 @@ World.add(world, [
   Wall(0, halfHeight, 50, width),
 ]);
 
-Events.on(engine, 'beforeUpdate', () => {
-  counter += 0.0024;
-
-  if (counter < 0) {
-    return;
-  }
-
-  const px = halfWidth - (halfWidth - 200) * Math.sin(counter);
-
-  // body is static so must manually update velocity for friction to work
-  Body.setVelocity(body, { x: px - body.position.x, y: 0 });
-  Body.setPosition(body, { x: px, y: body.position.y });
+Events.on(engine, 'collisionStart', ({ pairs }) => {
+  pairs.forEach(({ bodyA, bodyB }) => {
+    if (bodyA.label === 'player' && bodyB.label === 'circle') {
+      console.log('collision', bodyA, bodyB);
+    }
+  });
 });
+
+const bouncyHell = new BouncyHell({ width, world, engine });
 
 // add mouse control
 const mouse = Mouse.create(render.canvas);
