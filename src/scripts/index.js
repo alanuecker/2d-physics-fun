@@ -1,19 +1,11 @@
-import {
-  Engine,
-  Render,
-  Body,
-  Composites,
-  Events,
-  MouseConstraint,
-  Mouse,
-  World,
-} from 'matter-js';
+import { Engine, Render, Body, Composites, Events, MouseConstraint, Mouse, World } from 'matter-js';
 
 import '../styles/index.css';
 
 import Wall from './components/Wall';
 import Platform from './components/Platform';
 import Rectangle from './components/Rectange';
+import Player from './components/Player';
 
 // create engine
 const engine = Engine.create();
@@ -41,9 +33,11 @@ Engine.run(engine);
 // run the renderer
 Render.run(render);
 
-const run = () => {
-  window.requestAnimationFrame(run);
-  Engine.update(engine, 1000 / 60);
+const run = (objects, cycle) => {
+  window.requestAnimationFrame(c => run(objects, c));
+  Engine.update(engine, 1000 / 144);
+
+  objects.forEach(obj => obj.render(cycle));
 };
 
 // add bodies
@@ -54,6 +48,8 @@ let counter = -1;
 const stack = Composites.stack(halfWidth - 50, halfHeight - 80 - 6 * size, 1, 6, 0, 0, (x, y) =>
   Rectangle(x, y, size * 2, size),
 );
+
+const player = new Player({ x: 100, y: 100, world });
 
 World.add(world, [
   body,
@@ -102,4 +98,4 @@ Render.lookAt(render, {
   max: { x: window.innerWidth, y: window.innerHeight },
 });
 
-run();
+run([player]);
