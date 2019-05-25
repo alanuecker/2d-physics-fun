@@ -7,6 +7,8 @@ export default class BouncyHell {
     this.bouncyBalls = [];
 
     Events.on(engine, 'collisionStart', this.collectBalls);
+    // the velocity will be reset before the update
+    // so we have to save the bouncy balls and apply the force after the update
     Events.on(engine, 'beforeUpdate', this.bounceBalls);
 
     this.spawner = new Spawner({ x: 100, y: 100, width: width - 200, height: 100, world });
@@ -27,8 +29,8 @@ export default class BouncyHell {
         const { velocity } = body;
 
         const force = {
-          x: 15 * Math.sign(velocity.x),
-          y: 15 * Math.sign(velocity.y),
+          x: 10 * Math.sign(velocity.x),
+          y: 10 * Math.sign(velocity.y),
         };
 
         Body.setVelocity(body, force);

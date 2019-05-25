@@ -1,7 +1,5 @@
 import { Body, Bodies, World } from 'matter-js';
 
-import { defaultCategory, enemyCategory } from './CollisionMasks';
-
 export default class Player {
   constructor({ x, y, world }) {
     this.width = 50;
@@ -65,12 +63,9 @@ export default class Player {
   initPlayer = ({ x, y, width, world }) => {
     this.body = Bodies.rectangle(x, y, width, width, {
       label: 'player',
-      slop: 0.5,
+      slop: 0.05,
       friction: 1,
       frictionStatic: Infinity,
-      collisionFilter: {
-        mask: defaultCategory | enemyCategory,
-      },
       render: {
         strokeStyle: '#4ECDC4',
         fillStyle: 'transparent',
