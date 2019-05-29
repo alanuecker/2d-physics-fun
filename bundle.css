@@ -1,0 +1,30 @@
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+canvas {
+  padding: 0;
+  margin: 0;
+}
+
+#container {
+  height: 64px;
+  background-color: #111;
+  border-bottom: 1px solid white;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter {
+  display: flex;
+  color: white;
+  font-size: 48px;
+  white-space: pre;
+}
+
+
+/*# sourceMappingURL=bundle.css.map*/
