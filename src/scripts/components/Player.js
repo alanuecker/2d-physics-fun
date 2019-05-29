@@ -84,7 +84,7 @@ export default class Player {
 
       if (this.keysPressed.up && this.lastCycle + 250 < cycle) {
         Body.setVelocity(this.body, {
-          x: direction * 5,
+          x: direction * 4,
           y: -10,
         });
 
@@ -92,7 +92,7 @@ export default class Player {
         this.lastCycle = cycle;
       } else if (this.keysPressed.left || this.keysPressed.right) {
         Body.setVelocity(this.body, {
-          x: direction * 5,
+          x: direction * 4,
           y: this.body.velocity.y,
         });
       }

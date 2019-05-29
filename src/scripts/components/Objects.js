@@ -4,11 +4,10 @@ import Player from './Player';
 import Wall from './Wall';
 import HitCounter from './HitCounter';
 import BouncyHell from './BouncyHell';
-import Rectangle from './Rectange';
-import WallHell from './WallHell';
+import Camera from './Camera';
 
 export default class Objects {
-  constructor({ world, engine, width, height }) {
+  constructor({ world, engine, render, width, height }) {
     const player = new Player({ x: 100, y: 100, world });
 
     const halfHeight = height / 2;
@@ -16,19 +15,28 @@ export default class Objects {
 
     World.add(world, [
       // walls
-      Wall(halfWidth, 0, width, 50),
-      Wall(halfWidth, height, width, 50),
-      Wall(width, halfHeight, 50, height),
-      Wall(0, halfHeight, 50, width),
+      // top
+      Wall(halfWidth, -50, width + 100, 50),
+      // bottom
+      Wall(halfWidth, height - 25, width + 100, 50),
+      // right
+      Wall(width + 50, halfHeight, 50, height + 100),
+      // left
+      Wall(-50, halfHeight, 50, height + 100),
+      // poles
+      Wall(halfWidth / 2, height - 150, 100, 200),
+      Wall(halfWidth + halfWidth / 2, height - 150, 100, 200),
     ]);
 
-    this.bouncyHell = new BouncyHell({ width, world, engine });
-    this.wallHell = new WallHell({ width, height, world, engine });
+    this.camera = new Camera({ render, engine });
+
+    this.bouncyHell = new BouncyHell({ width, world, engine, camera: this.camera });
+    // this.wallHell = new WallHell({ width, height, world, engine });
     this.hitCounter = new HitCounter({ engine });
 
-    this.shield = new Rectangle(200, 200, 200, 30);
+    // this.shield = new Rectangle(200, 200, 200, 30);
 
-    World.addBody(world, this.shield);
+    // World.addBody(world, this.shield);
 
     this.run([player], engine);
   }

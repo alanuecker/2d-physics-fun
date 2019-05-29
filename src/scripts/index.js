@@ -52,4 +52,4 @@ Render.lookAt(render, {
   max: { x: width, y: height },
 });
 
-const objects = new Objects({ world, engine, width, height });
+const objects = new Objects({ world, engine, render, width, height });

@@ -13,7 +13,7 @@ export default class Spawner {
 
     this.spawner = [];
 
-    this.spawn({ amount: 20 });
+    this.spawn({ amount: 10 });
   }
 
   spawn = ({ amount }) => {
