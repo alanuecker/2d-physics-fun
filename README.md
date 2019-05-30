@@ -1,17 +1,9 @@
-### Installation
+# [Play](https://alanuecker.github.io/2d-physics-fun/)
 
-```
-yarn
-```
+### Controls
+- Left: `A`
+- Right: `D`
+- Jump: `W`
 
-### Start Dev Server
-
-```
-yarn run start
-```
-
-### Build Prod Version
-
-```
-yarn run build
-```
+### Concept
+There is no real game play aspect a the moment and this is more like a playground to check [matter.js](http://brm.io/matter-js/)
